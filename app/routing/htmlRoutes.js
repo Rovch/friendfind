@@ -1,25 +1,14 @@
-var express = require('express');
-var path = require("path");
-var bodyParser = require('body-parser');
 
-var app = express();
+var path = require('path');
 
-// Sets up for express to handle data parsing
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-function survey() {
-  app.get("/survey", function (req, res) {
-    res.sendFile(path.join(__dirname, "app/public/survey.html"));
+module.exports = function(app) {
+// // Basic route that sends the userto the home page
+// Basic route that sends the user first to the AJAX Page
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/home.html"));
   });
-}
-function home() {
-  app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "app/public/home.html"));
+  
+  app.get("/survey", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/survey.html"));
   });
-}
-
-
-// exports the variables and functions above so that other modules can use them
-module.exports.home = home;
-module.exports.survey = survey;
+};

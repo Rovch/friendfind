@@ -7,8 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
     crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
@@ -17,14 +16,20 @@
 </head>
 
 <body>
-
   <div class="container">
     <div class="row">
       <div class="col-5 move">
+        <form>
+          <label for="validationServer03">Name (Required)</label>
+          <input type="text" class="form-control is-invalid" id="name">
+
+          <label for="validationServer03">Name (Required)</label>
+          <input type="text" class="form-control is-invalid" id="photo">
+        </form>
         <form action="">
           <div class="form-group">
             <label for="exampleFormControlSelect1">Whats your name?</label>
-            <select class="form-control" id="exampleFormControlSelect1" id="one">
+            <select class="form-control" id="question1">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -34,7 +39,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">whats your age?</label>
-            <select class="form-control" id="exampleFormControlSelect1" id="two">
+            <select class="form-control" id="question2">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -44,7 +49,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Whats your eye color?</label>
-            <select class="form-control" id="exampleFormControlSelect1">
+            <select class="form-control" id="question3">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -54,7 +59,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">What city do you live in?</label>
-            <select class="form-control" id="exampleFormControlSelect1">
+            <select class="form-control" id="question4">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -64,7 +69,7 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Whats your favorite color?</label>
-            <select class="form-control" id="exampleFormControlSelect1">
+            <select class="form-control" id="question5">
               <option>1</option>
               <option>2</option>
               <option>3</option>
@@ -72,11 +77,61 @@
               <option>5</option>
             </select>
           </div>
+          <button id="submit" data-toggle="modal" data-target="#exampleModal">SUBMIT</button>
         </form>
+      </div>
+    </div>
+    Copy
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+    </button> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <script type="text/javascript">
+    $("#submit").on("click", function (event) {
+      event.preventDefault();
+      var newUser = {
+        name: $("#name").val(),
+        photo: $("#photo").val(),
+        info: [],
+        infoFunc: function () {
+          for (var i = 0; i < 5; i++) {
+            console.log("in")
+            newUser.info.push($(`#question${[i]}`).val());
+          }
+        }
+      };
+
+      newUser.infoFunc();
+      console.log(newUser)
+
+      $.post("/api/new", newUser, function (data) {
+        console.log(data)
+      })
+    });
+  </script>
 
 </body>
 
